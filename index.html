@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>RandomConversations</title>
+      <link rel="stylesheet" href="public/stylesheets/index.css">
+      <style>
+          body{
+              background: #f9f9f9;
+          }
+
+          /*First form*/
+          #container{
+              width: 700px;
+              margin: 0 auto;
+              margin-left: 38%;
+              display: none;
+          }
+
+          #formContainer1{
+              float: left;
+              border: 1px #ccc solid;
+              border-radius: 10px;
+              background: #f4f4f4;
+              padding: 10px;
+              margin-left: 20px;
+          }
+
+
+          /*Second Form*/
+          #mainWrapper{
+              /*display: none;*/
+          }
+
+          #chatWindow{
+              height: 300px;
+
+          }
+
+          #chatWrapper{
+              float: left;
+              border: 1px #ccc solid;
+              border-radius: 10px;
+              background: #f4f4f4;
+              padding: 10px;
+          }
+
+          #userWrapper{
+              float: left;
+              border: 1px #ccc solid;
+              border-radius: 10px;
+              background: #f4f4f4;
+              padding: 10px;
+              margin-left: 20px;
+              width: 150px;
+              max-height: 200px;
+          }
+
+          input{
+              height: 30px;
+          }
+      </style>
+  </head>
+  <body>
+
+<!--Login form / lets keep it simple for now.-->
+    <div id ="container" class="" style="margin-top: 100px">
+        <div id="cont2">
+          <h2>Ronald's RandomConversations</h2>
+          <div id="formContainer1">
+            <form id="usernameForm">
+              <label for="username">Username: </label><br>
+                <input type="text" size=35 id="username"><br><br>
+              <input type="submit" value="Enter to a chat room">
+            </form>
+          </div>
+        </div>
+    </div>
+
+
+<!--This is for the conversation space.. // again remember to keep it simple for now-->
+  <div id="mainWrapper">
+      <h2>Chat</h2>
+      <div id="chatWrapper">
+          <div id="chatWindow"> </div>
+          <form id="messageForm">
+              <input type="text" size="35" id="message" placeholder="Your message.." >
+              <input type="submit">
+          </form>
+      </div>
+
+      <!--Managed with javascript.. so leave it empty-->
+      <div id="userWrapper">
+        <div id="users"></div>
+      </div>
+
+  </div>
+
+
+  <!--Some stuff to send messages-->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      $(function(){
+            var socket = io.connect();
+            var $messageForm = $('#messageForm');
+            var $message = $('#message');
+            var $chatWindow = $('#chatWindow');
+
+            $messageForm.submit(function(e){
+                e.preventDefault();
+                console.log('Submitted');
+
+                socket.emit('send message', $message.val());
+                $message.val('');  //clear message
+
+            });
+
+            socket.on('new message',function(data){
+                $chatWindow.append(data.msg + '<br>');
+            });
+
+      });
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,53 @@
+body{
+    background: #f9f9f9;
+}
+
+/*First form*/
+#container{
+    width: 700px;
+    margin: 0 auto;
+    margin-left: 38%;
+}
+
+#formContainer1{
+    float: left;
+    border: 1px #ccc solid;
+    border-radius: 10px;
+    background: #f4f4f4;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+
+/*Second Form*/
+#mainWrapper{
+    display: none;
+}
+
+#chatWindow{
+    height: 300px;
+
+}
+
+#chatWrapper{
+    float: left;
+    border: 1px #ccc solid;
+    border-radius: 10px;
+    background: #f4f4f4;
+    padding: 10px;
+}
+
+#userWrapper{
+    float: left;
+    border: 1px #ccc solid;
+    border-radius: 10px;
+    background: #f4f4f4;
+    padding: 10px;
+    margin-left: 20px;
+    width: 150px;
+    max-height: 200px;
+}
+
+input{
+    height: 30px;
+}
