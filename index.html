@@ -14,7 +14,6 @@
               width: 700px;
               margin: 0 auto;
               margin-left: 38%;
-              display: none;
           }
 
           #formContainer1{
@@ -30,6 +29,8 @@
           /*Second Form*/
           #mainWrapper{
               /*display: none;*/
+
+              display: none;
           }
 
           #chatWindow{
@@ -67,6 +68,8 @@
     <div id ="container" class="" style="margin-top: 100px">
         <div id="cont2">
           <h2>Ronald's RandomConversations</h2>
+            <p>Create Username:</p>
+            <div id = "error"></div>
           <div id="formContainer1">
             <form id="usernameForm">
               <label for="username">Username: </label><br>
@@ -106,19 +109,47 @@
             var $messageForm = $('#messageForm');
             var $message = $('#message');
             var $chatWindow = $('#chatWindow');
+            var $usernameForm = $('#usernameForm');    //for form
+            var $users = $('#users');                   //for field by the text form
+            var $username = $('#username');
+            var $error  = $('#error');
 
-            $messageForm.submit(function(e){
+          $usernameForm.submit(function(e){
+              e.preventDefault();
+              console.log('Submitted');
+
+              socket.emit('new user', $username.val() , function(data){
+                    if(data){
+                        $('#container').hide();
+                        $('#mainWrapper').show();
+                    }else{
+                        $error.html('Username is taken');
+                    }
+              });
+          });
+
+          socket.on('usernames', function(data){
+              var text = '';
+              for(i = 0; i < data.length; i++){
+                  text += data[i] + '<br>';
+              }
+              $users.html(text);
+          });
+
+          $messageForm.submit(function(e){
                 e.preventDefault();
-                console.log('Submitted');
+                //console.log('Submitted');
 
                 socket.emit('send message', $message.val());
                 $message.val('');  //clear message
 
-            });
+          });
 
-            socket.on('new message',function(data){
-                $chatWindow.append(data.msg + '<br>');
-            });
+
+
+          socket.on('new message',function(data){
+                $chatWindow.append('<strong>' + data.user + ': ' + '</strong>' + data.msg + '<br>');
+          });
 
       });
     </script>
