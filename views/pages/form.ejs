@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Retail Prices</title>
+</head>
+<body>
+
+<div style="text-align: center; margin-top: 100px;">
+    <h1>Rate Calculator</h1>
+    <p> Select your item weight and type to get a quote.</p>
+    <form id="rateForm" action="/getRate" method="get">
+        Item Weight:<input type="text" name="weight" id="weight" style="width: 153px">
+        <br>
+        <select name="mailType" style="width: 250px;">
+            <option value="letters-stamped">Letters (Stamped)</option>
+            <option value="letters-metered">Letters (Metered)</option>
+            <option value="large-envelopes">Large Envelopes (Flats)</option>
+            <option value="first-class">First-Class Package Service - Retail</option>
+        </select>
+        <br><br>
+        <input type="submit" >
+    </form>
+</div>
+
+</body>
+</html>
